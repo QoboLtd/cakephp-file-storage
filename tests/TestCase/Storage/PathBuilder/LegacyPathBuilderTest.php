@@ -40,7 +40,7 @@ class LegacyPathBuilderTest extends TestCase {
 			'created' => '2012-01-01 12:00:00',
 			'modified' => '2012-01-01 12:00:00',
 		], ['accessibleFields' => ['*' => true]]);
-		$this->entity->accessible('id', true);
+		$this->entity->setAccess('id', true);
 	}
 
 	/**

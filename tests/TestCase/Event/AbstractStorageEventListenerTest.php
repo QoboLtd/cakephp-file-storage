@@ -110,11 +110,11 @@ class AbstractStorageEventListenerTest extends FileStorageTestCase {
 		$result = $this->Listener->buildFilename($table, $entity);
 		$this->assertEquals($result, 'filestorage1.png');
 
-		$this->Listener->config(['preserveExtension' => false]);
+		$this->Listener->setConfig(['preserveExtension' => false]);
 		$result = $this->Listener->buildFilename($table, $entity);
 		$this->assertEquals($result, 'filestorage1');
 
-		$this->Listener->config(['preserveFilename' => true]);
+		$this->Listener->setConfig(['preserveFilename' => true]);
 		$result = $this->Listener->buildFilename($table, $entity);
 		$this->assertEquals($result, 'cake.icon.png');
 	}

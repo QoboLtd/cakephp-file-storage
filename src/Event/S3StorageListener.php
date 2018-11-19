@@ -42,7 +42,7 @@ class S3StorageListener extends AbstractStorageEventListener {
  */
 	public function afterDelete(Event $Event) {
 		if ($this->_checkEvent($Event)) {
-			$table = $Event->subject();
+			$table = $Event->getSubject();
 			$record = $Event->data['record'][$table->alias()];
 			$path = $this->_buildPath($Event);
 			try {
@@ -71,12 +71,12 @@ class S3StorageListener extends AbstractStorageEventListener {
  */
 	public function afterSave(Event $Event) {
 		if ($this->_checkEvent($Event)) {
-			$table = $Event->subject();
-			$record = $Event->data['record'];
+			$table = $Event->getSubject();
+			$record = $Event->getData('record');
 			$Storage = $this->getAdapter($record['adapter']);
 
 			try {
-				$path = $this->buildPath($Event->subject(), $Event->data['record']);
+				$path = $this->buildPath($Event->getSubject(), $Event->getData('record'));
 				$record['path'] = $path['path'];
 				$Storage->write($path['combined'], file_get_contents($record['file']['tmp_name']), true);
 				$table->save($record, array(
@@ -98,7 +98,7 @@ class S3StorageListener extends AbstractStorageEventListener {
  */
 	public function buildPath($table, $entity) {
 		$adapterConfig = $this->getAdapterconfig($entity['adapter']);
-		$id = $entity[$table->primaryKey()];
+		$id = $entity[$table->getPrimaryKey()];
 
 		$path = $this->fsPath('files' . DS . $entity['model'], $id);
 		$path = '/' . str_replace('\\', '/', $path);

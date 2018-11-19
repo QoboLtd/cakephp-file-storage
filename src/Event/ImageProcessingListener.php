@@ -47,8 +47,8 @@ class ImageProcessingListener extends AbstractStorageEventListener {
 	 * @param array $config
 	 */
 	public function __construct(array $config = []) {
-		$this->config('autoRotate', []);
-		$this->config($config);
+		$this->setConfig('autoRotate', []);
+		$this->setConfig($config);
 		$this->_imageProcessor = new ImageProcessor();
 	}
 
@@ -313,11 +313,11 @@ class ImageProcessingListener extends AbstractStorageEventListener {
 		$data = $Event->getData();
 		extract($data);
 
-		if (!isset($Event->data['image']['adapter'])) {
+		if (!empty($Event->getData('image.adapter'))) {
 			throw new RuntimeException(__d('file_storage', 'No adapter config key passed!'));
 		}
 
-		$adapterClass = $this->getAdapterClassName($Event->data['image']['adapter']);
+		$adapterClass = $this->getAdapterClassName($Event->getData('image.adapter'));
 		$buildMethod = '_build' . $adapterClass . 'Path';
 
 		if (method_exists($this, $buildMethod)) {
@@ -366,7 +366,7 @@ class ImageProcessingListener extends AbstractStorageEventListener {
 
 		$path = '/' . $this->_buildPath($image, true, $hash);
 
-		$config = StorageManager::config($Event->data['image']['adapter']);
+		$config = StorageManager::config($Event->getData('image.adapter'));
 		$bucket = $config['adapterOptions'][1];
 		if (!empty($config['cloudFrontUrl'])) {
 			$cfDist = $config['cloudFrontUrl'];

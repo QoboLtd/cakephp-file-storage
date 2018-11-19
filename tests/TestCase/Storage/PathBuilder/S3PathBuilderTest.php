@@ -38,7 +38,7 @@ class S3PathBuilderTest extends TestCase {
 			'path' => '',
 			'adapter' => 'S3',
 		], ['accessibleFields' => ['*' => true]]);
-		$this->entity->accessible('id', true);
+		$this->entity->setAccess('id', true);
 	}
 
 /**

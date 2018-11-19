@@ -54,10 +54,10 @@ class FileStorageTable extends Table {
 	 */
 	public function initialize(array $config) {
 		parent::initialize($config);
-		$this->primaryKey('id');
+		$this->setPrimaryKey('id');
 		$this->addBehavior('Timestamp');
-		$this->displayField('filename');
-		$this->table('file_storage');
+		$this->setDisplayField('filename');
+		$this->setTable('file_storage');
 	}
 
 	/**
@@ -111,7 +111,7 @@ class FileStorageTable extends Table {
 	protected function _checkEntityBeforeSave(EntityInterface &$entity) {
 		if ($entity->isNew()) {
 			if (empty($entity->model)) {
-				$entity->model = $this->table();
+				$entity->model = $this->getTable();
 			}
 			if (empty($entity->adapter)) {
 				$entity->adapter = $this->_defaultAdapter;
@@ -172,7 +172,7 @@ class FileStorageTable extends Table {
 		$this->record = $this->find()
 			->contain([])
 			->where([
-				$this->alias() . '.' . $this->primaryKey() => $entity->{$this->primaryKey()}
+				$this->getAlias() . '.' . $this->getPrimaryKey() => $entity->{$this->getPrimaryKey()}
 			])
 			->first();
 

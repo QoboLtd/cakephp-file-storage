@@ -86,7 +86,7 @@ abstract class AbstractStorageEventListener implements EventListenerInterface {
 	 * @param array $config
 	 */
 	public function __construct(array $config = []) {
-		$this->config($config);
+		$this->setConfig($config);
 	}
 
 	/**
@@ -140,10 +140,10 @@ abstract class AbstractStorageEventListener implements EventListenerInterface {
 			$path .= $table->table() . DS;
 		}
 		if ($this->_config['randomPath'] === true) {
-			$path .= StorageUtils::randomPath($entity[$table->primaryKey()]);
+			$path .= StorageUtils::randomPath($entity[$table->getPrimaryKey()]);
 		}
 		if ($this->_config['uuidFolder'] === true) {
-			$path .= $this->stripDashes($entity[$table->primaryKey()]) . DS;
+			$path .= $this->stripDashes($entity[$table->getPrimaryKey()]) . DS;
 		}
 		return $path;
 	}
@@ -162,7 +162,7 @@ abstract class AbstractStorageEventListener implements EventListenerInterface {
 		}
 		return (
 			$this->_checkTable($event)
-			&& (bool)$this->getAdapterClassName($event->data['record']['adapter'])
+			&& (bool)$this->getAdapterClassName($event->getData('record.adapter'))
 			&& $this->_modelFilter($event)
 		);
 	}
@@ -190,7 +190,7 @@ abstract class AbstractStorageEventListener implements EventListenerInterface {
 	 * @return boolean
 	 */
 	protected function _checkTable(Event $event) {
-		return ($event->subject() instanceOf $this->storageTableClass);
+		return ($event->getSubject() instanceOf $this->storageTableClass);
 	}
 
 	/**
