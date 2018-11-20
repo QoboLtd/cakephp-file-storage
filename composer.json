@@ -22,7 +22,7 @@
 		"php": ">=7.0.0",
 		"cakephp/cakephp": "^3.6.0",
 		"cakephp/plugin-installer": "^1.0.0",
-		"cakephp/migrations": "^2.0.0",
+		"cakephp/migrations": "^1.7",
 		"knplabs/gaufrette": "^0.7.0"
 	},
 	"require-dev": {
