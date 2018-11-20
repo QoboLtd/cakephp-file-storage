@@ -209,10 +209,10 @@ class BaseListener extends AbstractListener {
 	 * @return array
 	 */
 	protected function _getVersionData($event) {
-		if (isset($event->data['versions'])) {
-			$versions = $event->data['versions'];
-		} elseif (isset($event->data['operations'])) {
-			$versions = array_keys($event->data['operations']);
+		if (!empty($event->getData('versions'))) {
+			$versions = $event->getData('versions');
+		} elseif (!empty($event->getData('operations'))) {
+			$versions = array_keys($event->getData('operations'));
 		} else {
 			$versions = [];
 		}
