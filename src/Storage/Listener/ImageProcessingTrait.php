@@ -6,6 +6,7 @@
  */
 namespace Burzum\FileStorage\Storage\Listener;
 
+use Burzum\FileStorage\Storage\StorageException;
 use Burzum\FileStorage\Storage\StorageUtils;
 use Cake\Core\Configure;
 use Cake\Datasource\EntityInterface;
